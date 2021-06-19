@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Xplates</title>
+        <!--<script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js"></script>-->
+        <script src="raphael.js" type="text/javascript" charset="utf-8"></script>
+        <!--<script src="raphael-zpd.js" type="text/javascript" charset="utf-8"></script>-->
+        <script src="g.raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="g.pie.js" type="text/javascript" charset="utf-8"></script>
+        <script src="g.bar.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="https://github.com/the55/usmap/blob/master/demo/g.raphael.js"></script>
+		 <!--<link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/wordcloud/wc.css"/>-->
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="XPlate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="SP-plate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="LineGraph.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Wordle.js" type="text/javascript" charset="utf-8"></script>
+    <script src="PieChart.js" type="text/javascript" charset="utf-8"></script>
+    <script src="BarChart.js" type="text/javascript" charset="utf-8"></script>
+    <script src="WorldMap_plate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="WorldMap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="USMap_plate.js" type="text/javascript" charset="utf-8"></script>
+	<script src="usmap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="Annotation-plate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ViewData.js" type="text/javascript" charset="utf-8"></script>
+    <script src="DataWire.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Visual.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Annotation-Visual.js" type="text/javascript" charset="utf-8"></script>
+    <script src="DataPlate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="DataManipulationPlate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="JoinPlate.js" type="text/javascript" charset="utf-8"></script>
+    <script src="FreqCounter.js" type="text/javascript" charset="utf-8"></script>
+    <script src="CanvasManager.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ComboBox.js" type="text/javascript" charset="utf-8"></script>
+    <script src="raphael.json.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="rgbcolor.js"></script> 
+	<script type="text/javascript" src="canvg.js"></script>
+    <script type="text/javascript" src="jscolor/jscolor.js"></script>
+  </head>
+  
+  <body>
+  <div id="container" style= "width:100%; height:100%;">
+  	<div id="header" style="background-color:#FFA500;height:4%">
+		<h1 style="margin-top:0; margin-bottom:0;text-align:center;">Exploration Plates</h1>
+	</div>
+    <div id="xplate-holder" style="width: 84.7%;height: 96.5%; float: left; background-color: #FFFFE0; border-right: 2px solid; border-color: #FFA500;">
+    </div>
+    <div id="menu" style="width: 15%;height: 96.5%; float:left;">
+    	<h1 style="margin-top:0; margin-bottom:0;text-align:center;">Menu</h1>
+    	<h2 style="margin-top:10; margin-bottom:0;text-align:left;">Enter Data URL:</h2>
+    	<input type="text" id="dataURL" style="width: 100%; height: 20px;"></input>
+    	<input type="button" value="Enter" style="width:100px; height: 30px; float: left;" onclick="addData()"></input>
+    	<div id="busy" style="font-size: 1em; text-align: center; z-index: 1000; margin-top: 5px; display: none;">Loading ... </div>
+    	<h2 style="margin-top:10; margin-bottom:0;text-align:left; clear: both">Sample Data URLs </h2>
+    	<input type="button" value="Car" style="width:100px; height: 30px; float: left;" onclick="addURL(0)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdFd4TW9ZcGg4cUthRnk2RThoSHVsRnc&pli=1#gid=0"></input>
+    	<input type="button" value="Stock Index" style="width:100px; height: 30px; float: left;" onclick="addURL(2)" title="http://spreadsheets.google.com/pub?key=tM2X47jMx73IeeeNjJGfOEg&output=html"></input>
+    	<input type="button" value="GINI Index" style="width:100px; height: 30px; float: left;" onclick="addURL(1)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdENxTmhZSGZuZVRXMFEzTGVSMTBuWXc#gid=0"></input>
+    	<input type="button" value="Life Expectancys" style="width:100px; height: 30px; float: left;" onclick="addURL(3)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdHpGcXRWVmVoNHNmbWtBcE9zWnE2ZlE#gid=0"></input>
+    	<input type="button" value="Artist" style="width:100px; height: 30px; float: left;" onclick="addURL(4)" title="http://www.the-numbers.com/people/records/"></input>
+    	<input type="button" value="News" style="width:100px; height: 30px; float: left;" onclick="addURL(5)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdHpGcXRWVmVoNHNmbWtBcE9zWnE2ZlE"></input>
+    	<input type="button" value="USGS Data" style="width:100px; height: 30px; float: left;" onclick="addURL(6)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdFM0aWlITXU5N3pJNllDUlJvR0w2TXc"></input>
+    	<input type="button" value="Population" style="width:100px; height: 30px; float: left;" onclick="addURL(7)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdDJWWnNPZ25SZkhXTkIyYnJkN3lJRWc"></input>
+    	<input type="button" value="Country Code" style="width:100px; height: 30px; float: left;" onclick="addURL(8)" title="https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdDlHaERISDBfV2ZHTjIwNVV3X00tbnc"></input>
+    	<h2 style="margin-top:10; margin-bottom:0;text-align:left; clear: both">Canvas Manager</h2>
+    	<input type="button" value="Show All" style="width:100px; height: 30px; float: left;" onclick="showAll()"></input>
+    	<input type="button" value="Clear Annotation" style="width:100px; height: 30px; float: left;" onclick="clearAnnotation()"></input>
+    	<h2 style="margin-top:10; margin-bottom:0;text-align:left; clear: both">Add Visual Plates</h2>
+    	<input type="button" value="Scatterplot" style="width:100px; height: 30px; float: left;" onclick="addVisualization(0)"></input>
+    	<input type="button" value="Line Graph" style="width:100px; height: 30px; float: left;" onclick="addVisualization(1)"></input>
+    	<input type="button" value="Pie Chart" style="width:100px; height: 30px; float: left;" onclick="addVisualization(4)"></input>
+    	<input type="button" value="Bar Chart" style="width:100px; height: 30px; float: left;" onclick="addVisualization(5)"></input>
+    	<input type="button" value="Tag Cloud" style="width:100px; height: 30px; float: left;" onclick="addVisualization(2)"></input>
+    	<input type="button" value="World Map" style="width:100px; height: 30px; float: left;" onclick="addVisualization(3)"></input>
+    	<input type="button" value="US Map" style="width:100px; height: 30px; float: left;" onclick="addVisualization(6)"></input>
+    	<input type="button" value="Annotation" style="width:100px; height: 30px; float: left;" onclick="addVisualization(100)"></input>
+    	<h2 style="margin-top:10; margin-bottom:0;text-align:left; clear: both">Add Data Plates</h2>
+    	<input type="button" value="Sort" style="width:100px; height: 30px; float: left;" onclick="addDataPlate(2)"></input>
+    	<input type="button" value="Intersection" style="width:100px; height: 30px; float: left;" onclick="addDataPlate(0)"></input>
+    	<input type="button" value="Union" style="width:100px; height: 30px; float: left;" onclick="addDataPlate(1)"></input>
+    	<input type="button" value="Join" style="width:100px; height: 30px; float: left;" onclick="addDataPlate(3)"></input>
+    	<input type="button" value="Frequency Counter" style="width:100px; height: 30px; float: left;" onclick="addDataPlate(4)"></input>
+    	<!--<h2 style="margin-top:20; margin-bottom:0;text-align:left; clear: left; float: left;">Annotation Color: </h2>
+    	<div class="box" style="float:left; margin-top:25px; margin-left: 10px; margin-right: 1px; background-color:#000000;"></div>
+    	-->
+    	<h2 style="margin-top:20; margin-bottom:0;text-align:left; clear: both">Custom Annotation Color</h2>
+    	<input class="color {hash:true, pickerClosable:true}" style="width: 100%; height: 20px;" id="annotationColor" value="000000" onchange="changeAnnotationColor(this.color)">
+    	<h2 style="margin-top:5; margin-bottom:0;text-align:left; clear: both">Annotation Width: 
+			<input style="width: 50px; height: 20px;" id="annotationWidth" value="1" onchange="changeAnnotationWidth()">
+			px
+		</h2>
+		<!--<div style="width: 75%; height: 2px; clear: both; margin-top:5px; background-color:#000000;" align="center"></div>
+		-->
+		<h2 style="margin-top:20; margin-bottom:0;text-align:left; clear: left; float: left;">Save SVG Canvas: </h2>
+		<input type="button" value="Save" style="width:100px; height: 30px; float: left; margin-top:20px;" onclick="save()"></input>
+		<input style="width: 100%; height: 30px;" id="data" value="" onchange="">
+    </div>
+    <div id="footer" style="background-color:#FFA500;height: 30px;clear:both;text-align:center; margin-top:0; margin-bottom:0;">
+		Copyright © 2012 Waqas Javed and Niklas Elmqvist</div>
+  </div>
+  
+   <script type="text/javascript">  		
+		// Load the Google API
+		//https://docs.google.com/spreadsheet/ccc?key=0AltLYhwFdtludFZPbUJKV3ZkMnRfa01RX0JMMHNiamc#gid=0
+		google.load("visualization", "1"); 
+		 //google.load('visualization', '1', {packages: ['corechart']});
+		// Set callback to run when API is loaded 
+		google.setOnLoadCallback(initialize);
+		 
+		var container, canvas, xplate;
+		//window.onload = function () {
+		function initialize(){
+			container = document.getElementById('xplate-holder');
+			canvas = Raphael(container, container.offsetWidth, container.style.height); //container.style.height
+			xplate = new Xplate(canvas, container.offsetWidth, container.offsetHeight);
+		};
+  		
+  		function addData(input){
+  	  		try{
+  	  	  		if (document.getElementById('dataURL').value == ""){
+  	  	  			alert('Error in query: no URL');
+  	  	  	  		return;
+  	  	  		}
+
+  	  	  		var url = document.getElementById('dataURL').value; 
+  	  	 
+  	  			showBusysign();
+	  			var query = new google.visualization.Query(url); 
+	            //query.setQuery('select B, C');            
+	            // Send the query with a callback function 
+	            query.send(drawVisualization);
+	            
+  	  		}
+  	  		finally{
+  	  	  		//hideBusysign();
+  	  		}  
+		};
+
+		function addVisualization(vis){
+			xplate.addBranch(vis);
+		};
+
+		function addDataPlate(plate){
+			xplate.addDataPlate(plate);
+		};
+
+		function hideBusysign() {
+			   document.getElementById('busy').style.display ='none';
+		};
+
+		function showBusysign() {
+			   document.getElementById('busy').style.display ='inherit';
+		};
+		
+		function drawVisualization(response){
+			// Handle errors
+  			if (response.isError()) { 
+            	alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+            	hideBusysign(); 
+            	return; 
+        	}
+        	// Extract data table from result
+        	var data = response.getDataTable();
+        	//var data = google.visualization.datasource.util.CsvDataSourceHelper.read(google.visualization.datasource.util.CsvDataSourceHelper.getCsvUrlReader("https://data.seattle.gov/api/views/mags-97de/rows.csv"));
+
+        	xplate.addData(data);
+			hideBusysign();			
+			
+		};
+
+		function showAll(){
+			xplate.showAll();
+		};
+
+		function clearAnnotation(){
+			xplate.clearAnnotation();
+		};
+
+		function addURL(input){
+			var url;
+			if (input == 0)
+  	  			url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdFd4TW9ZcGg4cUthRnk2RThoSHVsRnc&pli=1#gid=0";
+  			else if (input == 1)
+  	  			url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdENxTmhZSGZuZVRXMFEzTGVSMTBuWXc#gid=0";
+  			else if (input == 2)
+  	  	  		url = "http://spreadsheets.google.com/pub?key=tM2X47jMx73IeeeNjJGfOEg&output=html";
+  			else if (input == 3)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdHpGcXRWVmVoNHNmbWtBcE9zWnE2ZlE#gid=0";
+  			else if (input == 4)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdHdnVFlna0RsVG5oclVONWMxWDQtSWc";
+  			else if (input == 5)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdHpGcXRWVmVoNHNmbWtBcE9zWnE2ZlE";
+  			else if (input == 6)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdFM0aWlITXU5N3pJNllDUlJvR0w2TXc";
+  			else if (input == 7)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdDJWWnNPZ25SZkhXTkIyYnJkN3lJRWc";
+  			else if (input == 8)
+  	  	  		url = "https://docs.google.com/spreadsheet/ccc?key=0AqNejY3rQ5ojdDlHaERISDBfV2ZHTjIwNVV3X00tbnc";
+  			else
+  	  			return;
+
+  			// another data resource repository http://earthtrends.wri.org/text/
+
+			document.getElementById('dataURL').value = url;
+	  			
+		}
+
+		function changeAnnotationColor(color){
+			Xplate.annotation_color = "#"+color;
+		}
+
+		function changeAnnotationWidth(){
+			var val = document.getElementById('annotationWidth').value;
+			if (val > 0 && !isNaN(val))
+				Xplate.annotation_width = val;
+			else{
+				document.getElementById('annotationWidth').value = Xplate.annotation_width;
+				alert("Enter a valid annotation width");
+			}
+		}
+
+		var filename;
+
+		function save(){
+			var div = document.getElementById('xplate-holder').innerHTML;
+			document.getElementById('data').value = div;
+		//	alert("SVG data updated.");
+		
+		
+		if (!filename) filename = "test";
+		// ********* Get file name ************
+		var txt =  prompt("Enter File Name", ""+filename);
+		//*************************************
+		
+		if (txt!=null){
+			filename = txt;
+			var ajax = new XMLHttpRequest();
+			ajax.open("POST",'save.php',false);
+			ajax.setRequestHeader('Content-Type', 'application/upload');
+			ajax.send("images/"+filename+".svg,"+div); 
+			alert(div);
+		}
+			
+			//return 'http://web.ics.purdue.edu/~wjaved/projects/FriendShare/Test/'+name;
+					
+		}
+  
+    </script>
+    
+    <style type="text/css">
+    	.box{  
+		border-left:1px solid #111; border-top:1px solid #111; border-right:1px solid #333; border-bottom:1px solid #333; 
+		width:20px;
+		height:20px;    	
+    	}
+    </style>
+   </body>
+</html>
